@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<script>
+			/* LIGHT/DARK MODE */
+			const LOCAL_STORAGE_KEY = 'theme';
+
+			function getLocalPreference() {
+				return localStorage.getItem(LOCAL_STORAGE_KEY)
+			}
+
+			function updateLocalPreference(mode) {
+				localStorage.setItem(LOCAL_STORAGE_KEY, mode);
+			}
+
+			function setDarkMode() {
+				document.documentElement.classList.add('dark');
+				updateLocalPreference('dark');
+			}
+
+			function setLightMode() {
+				document.documentElement.classList.remove('dark');
+				updateLocalPreference('light');
+			}
+
+			window.addEventListener('DOMContentLoaded', () => {
+				let localPreference = getLocalPreference();
+				// Gets dark mode preference from local storage on window load
+				// If there's no preference sets 'dark' mode by default
+				if (localPreference === null || localPreference === 'dark') {
+					setDarkMode();
+				} else {
+					setLightMode();
+				}
+			})
+		</script>
+
+		<div style="display: contents">
+			%sveltekit.body%
+		</div>
+	</body>
+</html>
